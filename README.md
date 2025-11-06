@@ -3,8 +3,9 @@ An Ansible role to handle the download and compilation of Xen Orchestra - Commun
 
 > [!CAUTION]  
 > DISCLAIMER!
-> This is produced and offered _as is_ without **any **warranty. Do you own due diligence and verify the code/functions.
-> No guarantees are given nor are any responsibilities taken. Use at your own risk!
+> This is produced and offered _as is_ without **any **warranty. Made to run on Debian/Ubuntu. Do your own due diligence and verify the code/functions.
+> No guarantees are given nor are any responsibilities taken. NONE!
+> **Use at your own risk!**
 
 
 #### Background
@@ -19,4 +20,4 @@ Those scripts are often quite involved and have grown quite big. Making them har
 
 ##### Known-Issues:
 * There could be a permission problem when mounting SRs on new installs.
-* Probably several others. But I don't remember
+* Probably several others. But I don't remember.
