@@ -5,8 +5,12 @@ An Ansible role to handle the download and compilation of Xen Orchestra - Commun
 > DISCLAIMER!
 > This is produced and offered _as is_ without **any **warranty. Made to run on Debian/Ubuntu. Do your own due diligence and verify the code/functions.
 > No guarantees are given nor are any responsibilities taken. NONE!
+> No support is offered!
 > **Use at your own risk!**
 
+### Standing on the shoulders of giants
+This wouldn't be possible without the awesome work done by Vates and the open source community in large. Please help out by contributing in some way to this great project.
+If you have any questions. Please refer to the official docs: [https://docs.xen-orchestra.com/](https://docs.xen-orchestra.com/). Or consider purchasing their paid support through their [XOA](https://xen-orchestra.com/) support packages. 
 
 #### Background
 This is something I've thrown together and been using for the better part of a year. 
