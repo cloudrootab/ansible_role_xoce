@@ -1,0 +1,43 @@
+---
+- name: Build XO
+  ansible.builtin.command: "./upgrade-xo.sh"
+  args:
+    chdir: /opt/xen-orchestra
+  register: result
+  failed_when: result.rc != 0
+  notify:
+    - Install XO as service
+    - Reload Redis
+    - Restart XO
+    - Check that the XO-website boots up correctly
+
+- name: Install XO as service
+  become: true
+  ansible.builtin.template:
+    src: xo-server.service.j2
+    dest: /etc/systemd/system/xo-server.service
+    owner: root
+    group: root
+    mode: "0744"
+
+- name: Reload Redis
+  become: true
+  ansible.builtin.systemd_service:
+    daemon_reload: true
+
+- name: Restart XO
+  become: true
+  ansible.builtin.systemd_service:
+    name: xo-server
+    enabled: true
+    state: restarted
+
+- name: "Check that the XO-website boots up correctly"
+  ansible.builtin.uri:
+    url: "{{ xo_server_publicurl }}/signin"
+    return_content: true
+    status_code: 200
+  register: result
+  until: "'<title>Xen Orchestra</title>' in result.content"
+  retries: 15
+  delay: 10

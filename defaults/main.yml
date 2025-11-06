@@ -1,0 +1,8 @@
+xo_server_publicurl: ""
+xo_user: "xo-user"
+xo_mountsdir: "/home/{{ xo_user }}/run/{{ xo_user }}"
+xo_server_ansible_user: "{{ ansible_user }}"
+xo_server_ansible_group: "{{ ansible_user }}"
+xo_redirecttohttps: "false"
+xo_https_port: "8443"
+xo_usesudo: "true"

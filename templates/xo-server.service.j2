@@ -1,0 +1,15 @@
+# systemd service for XO-Server.
+
+[Unit]
+Description= XO Server
+After=network-online.target
+
+[Service]
+Environment="DEBUG=xo:main"
+ExecStart=/usr/bin/node /opt/xen-orchestra/packages/xo-server/dist/cli.mjs
+Restart=always
+SyslogIdentifier=xo-server
+User={{ xo_user }}
+
+[Install]
+WantedBy=multi-user.target

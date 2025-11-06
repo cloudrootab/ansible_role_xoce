@@ -1,0 +1,133 @@
+---
+- name: Install pre-requisite packages
+  become: true
+  ansible.builtin.apt:
+    pkg:
+      - build-essential
+      - redis-server
+      - libpng-dev
+      - git
+      - python3-minimal
+      - libvhdi-utils
+      - lvm2
+      - cifs-utils
+      - nfs-common
+      - ntfs-3g
+    purge: true
+    autoremove: true
+    state: present
+
+# https://docs.ansible.com/ansible/latest/collections/community/general/npm_module.html
+- name: Install yarn through NPM
+  become: true
+  community.general.npm:
+    name: yarn
+    global: true
+    state: present
+
+- name: Create /opt/xen-orchestra folder
+  become: true
+  ansible.builtin.file:
+    path: /opt/xen-orchestra
+    owner: "{{ xo_server_ansible_user }}"
+    group: "{{ xo_server_ansible_group }}"
+    mode: "0775"
+    state: directory
+
+- name: Git clone XenOrchestra
+  ansible.builtin.git:
+    repo: https://github.com/vatesfr/xen-orchestra.git
+    dest: /opt/xen-orchestra
+    version: master
+  notify: Build XO
+
+- name: Change ownership of /opt/xen-orchestra folder
+  become: true
+  ansible.builtin.file:
+    path: /opt/xen-orchestra
+    state: directory
+    recurse: true
+    owner: "{{ xo_server_ansible_user }}"
+    group: "{{ xo_server_ansible_group }}"
+
+- name: Create xo-user account
+  become: true
+  ansible.builtin.user:
+    name: "{{ xo_user }}"
+    shell: /bin/bash
+    state: present
+
+- name: Change ownership of /var/lib/xo-server folder
+  become: true
+  ansible.builtin.file:
+    path: /var/lib/xo-server
+    state: directory
+    recurse: true
+    owner: "{{ xo_user }}"
+    group: "{{ xo_user }}"
+
+- name: Create folder /etc/xo-server
+  become: true
+  ansible.builtin.file:
+    path: "/etc/xo-server"
+    owner: root
+    group: root
+    mode: "0775"
+    state: directory
+
+- name: "Create folder {{ xo_mountsdir }}"
+  become: true
+  ansible.builtin.file:
+    path: "/home/xo-user/run/xo-server"
+    owner: xo-user
+    group: xo-user
+    mode: "0774"
+    state: directory
+
+- name: Push config from template
+  become: true
+  ansible.builtin.template:
+    src: config.toml.j2
+    dest: "/etc/xo-server/config.toml"
+    owner: root
+    group: root
+    mode: "0744"
+  notify: Restart XO
+
+- name: Push Build XO script
+  become: true
+  ansible.builtin.template:
+    src: upgrade-xo.sh.j2
+    dest: "/opt/xen-orchestra/upgrade-xo.sh"
+    owner: "{{ xo_server_ansible_user }}"
+    group: "{{ xo_server_ansible_group }}"
+    mode: "0774"
+
+- name: Install XO as service
+  become: true
+  ansible.builtin.template:
+    src: xo-server.service.j2
+    dest: /etc/systemd/system/xo-server.service
+    owner: root
+    group: root
+    mode: "0744"
+
+- name: Push config from template
+  become: true
+  ansible.builtin.template:
+    src: xo-user_sudoer.j2
+    dest: "/etc/sudoers.d/xo-user"
+    owner: root
+    group: root
+    mode: "0744"
+  notify: Restart XO
+
+- name: Set facl on mountsdir folder for mounted remote shares
+  become: true
+  ansible.posix.acl:
+    path: "{{ xo_mountsdir }}"
+    entity: xo-user
+    etype: user
+    permissions: rwx
+    default: true
+    state: present
