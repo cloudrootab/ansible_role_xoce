@@ -3,7 +3,7 @@ An Ansible role to handle the download and compilation of Xen Orchestra - Commun
 
 > [!CAUTION]  
 > DISCLAIMER!
-> This is produced and offered _as is_ without **any **warranty. Made to run on Debian/Ubuntu. Do your own due diligence and verify the code/functions.
+> This is produced and offered _as is_ without **any** warranty. Made to run on Debian/Ubuntu. Do your own due diligence and verify the code/functions.
 > No guarantees are given nor are any responsibilities taken. NONE!
 > No support is offered!
 > **Use at your own risk!**
