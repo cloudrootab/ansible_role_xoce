@@ -18,6 +18,9 @@ This is something I've thrown together and been using for the better part of a y
 #### Benefits _vs_ the many scripts available
 Those scripts are often quite involved and have grown quite big. Making them hard to scrutinize and validate so that they _acctually_ do what they claim to do. More importantly so that they don't do something they _shouldn't_. For this I preffer to use Ansible. As this in my oppinion makes everything more standardized and easier to read.
 
+#### Requirements
+* Debian based system. Tested and used on Ubunutu.
+* Installs node.js from nodesource.com's repo, using apt. (Currently LTS-24)
 
 > [!NOTE]  
 > This sets up the `xo-server` to run as non-root, using sudo. This _should_ improve security further. 
