@@ -1,3 +1,8 @@
+# Nodejs-variables
+xo_nodejs_repo: https://deb.nodesource.com/node_24.x nodistro main
+xo_nodejs_signedby: '[arch=amd64 signed-by=/usr/share/keyrings/nodesource.gpg]'
+
+# XO-variables
 xo_server_publicurl: ""
 xo_user: "xo-user"
 xo_mountsdir: "/home/{{ xo_user }}/run/{{ xo_user }}"

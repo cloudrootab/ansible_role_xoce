@@ -17,6 +17,33 @@
     autoremove: true
     state: present
 
+# Install node.js from nodesources repo
+- name: Fetch Node.js signing key
+  tags: nodejs
+  become: true
+  ansible.builtin.apt_key:
+    url: https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key
+    keyring: /usr/share/keyrings/nodesource.gpg
+    state: present
+
+- name: Add Node.js repository
+  tags: nodejs
+  become: true
+  ansible.builtin.apt_repository:
+    repo: "deb {{ xo_nodejs_signedby }} {{ xo_nodejs_repo }}"
+    filename: nodesource.list
+    update_cache: true
+    state: present
+
+- name: Install Node.js through apt
+  tags: nodejs
+  become: true
+  ansible.builtin.apt:
+    name: nodejs
+    update_cache: true
+    cache_valid_time: 1200
+    state: present
+
 # https://docs.ansible.com/ansible/latest/collections/community/general/npm_module.html
 - name: Install yarn through NPM
   become: true
