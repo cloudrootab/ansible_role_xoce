@@ -23,7 +23,8 @@ Those scripts are often quite involved and have grown quite big. Making them har
 * Installs node.js from nodesource.com's repo, using apt. (Currently LTS-24)
 
 > [!NOTE]  
-> This sets up the `xo-server` to run as non-root, using sudo. This _should_ improve security further. 
+> This sets up the `xo-server` to run as non-root, using sudo. This _should_ improve security further.
+> But this means that the webserver port defaults to `8443`
 
 ##### Known-Issues:
 * There could be a permission problem when mounting SRs on new installs.
