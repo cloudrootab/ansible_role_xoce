@@ -123,7 +123,7 @@ secure = true
 # #
 # # The only difference is the presence of the certificate and the key.
 [[http.listen]]
-#hostname = {{ hostvar_hostname }}.{{ hostvar_domain }}
+#hostname = {{ ansible_hostname }}.{{ ansible_domain }}
 port = {{ xo_https_port }}
 #
 # # Whether to autogenerate a self signed certificate if the `cert` or `key`
@@ -194,7 +194,7 @@ autoCert = true
 # Directory used to mount remotes
 #
 # Default: '/run/xo-server/mounts'
-mountsDir = '{{ mountsdir }}'
+mountsDir = '{{ xo_mountsdir }}'
 
 # Use sudo for mount with non-root user
 #
