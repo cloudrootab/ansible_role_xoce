@@ -158,3 +158,18 @@
     permissions: rwx
     default: true
     state: present
+
+- name: Flush and run all handlers
+  tags: xo
+  ansible.builtin.meta: flush_handlers
+
+- name: "Check that the XO-website boots up correctly"
+  tags: xo
+  ansible.builtin.uri:
+    url: "{{ xo_server_publicurl }}/signin"
+    return_content: true
+    status_code: 200
+  register: result
+  until: "'<title>Xen Orchestra</title>' in result.content"
+  retries: 15
+  delay: 10

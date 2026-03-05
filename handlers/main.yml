@@ -7,7 +7,7 @@
   failed_when: result.rc != 0
   notify:
     - Install XO as service
-    - Reload Redis
+    - Start Redis
     - Restart XO
     - Check that the XO-website boots up correctly
 
@@ -20,10 +20,14 @@
     group: root
     mode: "0744"
 
-- name: Reload Redis
+- name: Start Redis
+  tags: xo
   become: true
   ansible.builtin.systemd_service:
+    name: redis
     daemon_reload: true
+    enabled: true
+    state: started
 
 - name: Restart XO
   become: true
@@ -31,13 +35,3 @@
     name: xo-server
     enabled: true
     state: restarted
-
-- name: "Check that the XO-website boots up correctly"
-  ansible.builtin.uri:
-    url: "{{ xo_server_publicurl }}/signin"
-    return_content: true
-    status_code: 200
-  register: result
-  until: "'<title>Xen Orchestra</title>' in result.content"
-  retries: 15
-  delay: 10
