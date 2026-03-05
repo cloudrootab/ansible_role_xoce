@@ -87,7 +87,7 @@ publicUrl = '{{ xo_server_publicurl }}'
 # More info about the accepted values: https://www.npmjs.com/package/proxy-addr?activeTab=readme#proxyaddrreq-trust
 #
 # > Note: X-Forwarded-* headers are easily spoofed and the detected IP addresses are unreliable.
-useForwardedHeaders = true
+useForwardedHeaders = {{ xo_useForwardedHeaders }}
 
 # Settings applied to cookies created by xo-server's embedded HTTP server.
 #
