@@ -9,7 +9,6 @@
     - Install XO as service
     - Start Redis
     - Restart XO
-    - Check that the XO-website boots up correctly
 
 - name: Install XO as service
   become: true
