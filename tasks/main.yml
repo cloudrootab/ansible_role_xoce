@@ -13,6 +13,7 @@
       - cifs-utils
       - nfs-common
       - ntfs-3g
+      - libfuse2
     purge: true
     autoremove: true
     state: present
